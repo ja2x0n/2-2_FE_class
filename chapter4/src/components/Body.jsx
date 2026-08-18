@@ -1,10 +1,31 @@
 import "./Body.css";
+import { useState } from "react";
 
-const Body = (props) => {
+const Viewer = () => {
+    console.log("Viewer called");
+    return (
+        <div>
+            <h3>Viewer</h3>
+        </div>
+    );
+};
+
+const Body = () => {
+    const [number, setNumber] = useState(0);
+    const onIncrease = () => {
+        setNumber(number + 1);
+    };
+    const onDecrease = () => {
+        setNumber(number - 1);
+    };
     return (
         <>
-            <h1>Body</h1>
-            {props.children}
+            <div>
+                <h2>{number}</h2>
+                <Viewer />
+                <button onClick={onIncrease}>+</button>
+                <button onClick={onDecrease}>-</button>
+            </div>
         </>
     );
 };
