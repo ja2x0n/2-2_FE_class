@@ -2,37 +2,48 @@ import "./App.css";
 import Header from "./components/Header";
 import TodoEditor from "./components/TodoEditor";
 import TodoList from "./components/TodoList";
-import { useState, useRef } from "react";
 
+import { useRef, useReducer } from "react";
+
+function reducer(state, action) {
+    switch (action.type) {
+        case "CREATE":
+            return [action.newItem, ...state];
+        case "UPDATE":
+            return state.map((item) =>
+                item.id === action.targetId
+                    ? { ...item, isDone: !item.isDone }
+                    : item
+            );
+        case "DELETE":
+            return state.filter((item) => item.id !== action.targetId);
+        default:
+            return state;
+    }
+}
 function App() {
+    const [todo, dispatch] = useReducer(reducer, []);
     const idRef = useRef(0);
-    const [todo, setTodo] = useState([]);
-    // 할 일 추가 함수
-    const onCreate = (content) => {
-        const newItem = {
+    function addTodo(content) {
+        const item = {
             id: idRef.current,
-            content,
+            content: content,
             isDone: false,
-            createdDate: new Date().getTime(),
+            createDate: new Date().getTime(),
         };
-        setTodo([newItem, ...todo]);
         idRef.current += 1;
-    };
-    const onUpdate = (targetId) => {
-        setTodo(
-            todo.map((it) => {
-                if (it.id === targetId) return { ...it, isDone: !it.isDone };
-                else return it;
-            })
-        );
-    };
-    const onDelete = (targetId) => {
-        setTodo(todo.filter((it) => it.id !== targetId));
-    };
+        dispatch({ type: "CREATE", newItem: item });
+    }
+    function onUpdate(id) {
+        dispatch({ type: "UPDATE", targetId: id });
+    }
+    function onDelete(id) {
+        dispatch({ type: "DELETE", targetId: id });
+    }
     return (
         <div className="App">
             <Header />
-            <TodoEditor onCreate={onCreate} />
+            <TodoEditor onAdd={addTodo} />
             <TodoList todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
         </div>
     );
