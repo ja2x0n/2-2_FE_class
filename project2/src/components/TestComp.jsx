@@ -1,37 +1,16 @@
-import { useReducer } from "react";
+import { useState, useCallback } from "react";
 
-function reducer(state, action) {
-    switch (action.type) {
-        case "INCREASE":
-            return state + action.data;
-        case "DECREASE":
-            return state - action.data;
-        case "RESET":
-            return 0;
-        default:
-            return state;
-    }
-}
+export default function TestComp() {
+    const [count, setCount] = useState(0);
 
-function TestComp() {
-    const [count, dispatch] = useReducer(reducer, 0);
+    const onIncrease = useCallback(() => {
+        setCount((prev) => prev + 1);
+    }, []);
 
     return (
         <div>
-            <h4>테스트 컴포넌트</h4>
-            <bold>{count}</bold>
-            <div>
-                <button onClick={() => dispatch({ type: "INCREASE", data: 1 })}>
-                    +
-                </button>
-                <button onClick={() => dispatch({ type: "DECREASE", data: 1 })}>
-                    -
-                </button>
-                <button onClick={() => dispatch({ type: "RESET" })}>
-                    RESET
-                </button>
-            </div>
+            <h1>{count}</h1>
+            <button onClick={onIncrease}>+</button>
         </div>
     );
 }
-export default TestComp;

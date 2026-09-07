@@ -1,9 +1,10 @@
 import "./App.css";
 import Header from "./components/Header";
+// import TestComp from './components/TestComp'
 import TodoEditor from "./components/TodoEditor";
 import TodoList from "./components/TodoList";
 
-import { useRef, useReducer } from "react";
+import { useRef, useReducer, useCallback } from "react";
 
 function reducer(state, action) {
     switch (action.type) {
@@ -21,29 +22,35 @@ function reducer(state, action) {
             return state;
     }
 }
+
 function App() {
     const [todo, dispatch] = useReducer(reducer, []);
     const idRef = useRef(0);
-    function addTodo(content) {
+
+    const addTodo = useCallback((content) => {
         const item = {
             id: idRef.current,
             content: content,
             isDone: false,
-            createDate: new Date().getTime(),
+            createdDate: new Date().getTime(),
         };
+
         idRef.current += 1;
         dispatch({ type: "CREATE", newItem: item });
-    }
-    function onUpdate(id) {
-        dispatch({ type: "UPDATE", targetId: id });
-    }
-    function onDelete(id) {
-        dispatch({ type: "DELETE", targetId: id });
-    }
+    }, []);
+
+    const onUpdate = useCallback((targetId) => {
+        dispatch({ type: "UPDATE", targetId });
+    }, []);
+    const onDelete = useCallback((targetId) => {
+        dispatch({ type: "DELETE", targetId });
+    }, []);
+
     return (
         <div className="App">
             <Header />
-            <TodoEditor onAdd={addTodo} />
+            {/* <TestComp /> */}
+            <TodoEditor onCreate={addTodo} />
             <TodoList todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
         </div>
     );

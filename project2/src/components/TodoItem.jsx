@@ -1,6 +1,8 @@
 import "./TodoItem.css";
+import React from "react";
 
 function TodoItem({ id, content, isDone, createdDate, onUpdate, onDelete }) {
+    console.log(`item ${content} updated`);
     const onChangeCheckbox = () => {
         onUpdate(id);
     };
@@ -20,11 +22,11 @@ function TodoItem({ id, content, isDone, createdDate, onUpdate, onDelete }) {
             <div className="date_col">
                 {new Date(createdDate).toLocaleDateString()}
             </div>
-            <div className="button_col">
-                <button onClick={onClickDelete}>삭제</button>{" "}
+            <div className="btn_col">
+                <button onClick={onClickDelete}>삭제</button>
             </div>
         </div>
     );
 }
 
-export default TodoItem;
+export default React.memo(TodoItem);
