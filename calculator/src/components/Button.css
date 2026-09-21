@@ -1,0 +1,21 @@
+.button {
+    border: 0;
+    border-radius: 0.25rem;
+    width: 3rem;
+    height: 2rem;
+    cursor: pointer;
+    background-color: #dee2e6;
+    color: black;
+}
+.button_number {
+    background-color: #dee2e6;
+    color: black;
+}
+.button_operator {
+    background-color: #495057;
+    color: white;
+}
+.button_action {
+    background-color: #ffa94d;
+    color: black;
+}
