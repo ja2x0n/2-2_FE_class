@@ -70,3 +70,18 @@ export const emotionList = [
         img: getEmotionImgById(5),
     },
 ];
+
+export const getMonthRangeByDate = (date) => {
+    const beginTimeStamp = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        1
+    ).getTime();
+    const nextMonthTimeStamp = new Date(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        1
+    ).getTime();
+
+    return { beginTimeStamp, nextMonthTimeStamp };
+};
