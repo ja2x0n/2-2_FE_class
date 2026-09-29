@@ -1,3 +1,5 @@
+import React from "react";
+
 import "./DiaryItem.css";
 import Button from "./Button";
 
@@ -37,4 +39,4 @@ const DiaryItem = ({ id, emotionId, content, date }) => {
     );
 };
 
-export default DiaryItem;
+export default React.memo(DiaryItem);

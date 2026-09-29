@@ -15,7 +15,6 @@ const Home = () => {
         if (data.length >= 1) {
             const { beginTimeStamp, nextMonthTimeStamp } =
                 getMonthRangeByDate(pivotDate);
-            console.log(beginTimeStamp, nextMonthTimeStamp);
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setFilteredData(
                 data.filter(
